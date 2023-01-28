@@ -28,6 +28,14 @@ func GetUserById(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(user)
 }
 
+func CreateUser(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	var user models.User
+	json.NewDecoder(r.Body).Decode(&user)
+	database.Instance.Create(&user)
+	json.NewEncoder(w).Encode(user)
+}
+
 func checkIfUserExists(userId string) bool {
 	var product models.User
 	database.Instance.First(&product, userId)
