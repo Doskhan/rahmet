@@ -37,6 +37,7 @@ func RegisterRoutes(router *mux.Router) {
 	router.HandleFunc("/api/events/user/{id}", controllers.GetEventsByUserId).Methods("GET")
 	router.HandleFunc("/api/event", controllers.CreateEvent).Methods("POST")
 	router.HandleFunc("/api/event/participate", controllers.ParticipateEvent).Methods("POST")
+	router.HandleFunc("/api/event/rahmet", controllers.RahmetEvent).Methods("POST")
 	//router.HandleFunc("/api/products", controllers.CreateProduct).Methods("POST")
 	//router.HandleFunc("/api/products/{id}", controllers.UpdateProduct).Methods("PUT")
 	//router.HandleFunc("/api/products/{id}", controllers.DeleteProduct).Methods("DELETE")

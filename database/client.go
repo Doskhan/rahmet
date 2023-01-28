@@ -24,14 +24,14 @@ func Connect(connectionString string) {
 
 var users = []models.User{
 	models.User{
-		Name:    "Beknar",
-		Surname: "Danabek",
+		Name:    "Бекнар",
+		Surname: "Данабек",
 		Phone:   "+77000706424",
 		Email:   "beknar.danabek@bcc.kz",
 	},
 	models.User{
-		Name:    "Nurlan",
-		Surname: "Kambar",
+		Name:    "Нурлан",
+		Surname: "Камбар",
 		Phone:   "+77073077797",
 		Email:   "nurlan.kambar@bcc.kz",
 	},

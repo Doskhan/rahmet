@@ -15,6 +15,7 @@ type Event struct {
 	Location     string        `gorm:"size:255" json:"location"`
 	Time         int           `json:"time"`
 	Limit        int           `gorm:"default:10" json:"limit"`
+	Bonus        int           `gorm:"default:0" json:"bonus"`
 	Participants pq.Int32Array `gorm:"type:integer[]" json:"participants"`
 	Status       string        `gorm:"size:255;default:'active'" json:"status"`
 }

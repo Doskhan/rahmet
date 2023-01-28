@@ -73,6 +73,31 @@ func ParticipateEvent(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(event)
 }
 
+func RahmetEvent(w http.ResponseWriter, r *http.Request) {
+
+	var participate models.Participate
+	json.NewDecoder(r.Body).Decode(&participate)
+	eventId := strconv.Itoa(int(participate.EventID))
+	if checkIfEventExists(eventId) == false {
+		w.WriteHeader(http.StatusBadGateway)
+		json.NewEncoder(w).Encode("Product Not Found!")
+		return
+	}
+	var event models.Event
+	database.Instance.First(&event, eventId)
+
+	event.Bonus += 5
+
+	if event.Bonus == len(event.Participants)*5 {
+		event.Status = "inactive"
+	}
+	json.NewDecoder(r.Body).Decode(&event)
+
+	database.Instance.Save(&event)
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(event)
+}
+
 func checkIfEventExists(eventId string) bool {
 	var event models.Event
 	database.Instance.First(&event, eventId)
