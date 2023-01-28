@@ -3,7 +3,6 @@ package models
 import (
 	"github.com/lib/pq"
 	"gorm.io/gorm"
-	"time"
 )
 
 type Event struct {
@@ -11,18 +10,13 @@ type Event struct {
 	Title       string `gorm:"size:255;" json:"title"`
 	Description string `gorm:"size:255;" json:"description"`
 	Category    string `gorm:"size:255;" json:"category"`
-	//Creator     User      `gorm:"foreignKey:CreatorID;references:ID" json:"creator"`
+	//Creator      User          `gorm:"foreignKey:CreatorID;references:ID" json:"creator"`
 	CreatorID    uint32        `json:"creator_id"`
-	Location     Location      `gorm:"embedded" json:"location"`
-	Time         time.Time     `gorm:"default:current_timestamp" json:"time"`
+	Location     string        `gorm:"size:255" json:"location"`
+	Time         int           `json:"time"`
 	Limit        int           `gorm:"default:10" json:"limit"`
 	Participants pq.Int32Array `gorm:"type:integer[]" json:"participants"`
 	Status       string        `gorm:"size:255;default:'active'" json:"status"`
-}
-
-type Location struct {
-	Longitude string `json:"longitude"`
-	Latitude  string `json:"latitude"`
 }
 
 func (e *Event) FindAllEvents(db *gorm.DB) (*[]Event, error) {

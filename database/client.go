@@ -24,27 +24,33 @@ func Connect(connectionString string) {
 
 var users = []models.User{
 	models.User{
-		Name:     "Beknar",
-		Surname:  "Danabek",
-		Password: "password",
-		Email:    "beknar.danabek@bcc.kz",
+		Name:    "Beknar",
+		Surname: "Danabek",
+		Phone:   "+77000706424",
+		Email:   "beknar.danabek@bcc.kz",
 	},
 	models.User{
-		Name:     "Nurlan",
-		Surname:  "Kambar",
-		Password: "password",
-		Email:    "nurlan.kambar@bcc.kz",
+		Name:    "Nurlan",
+		Surname: "Kambar",
+		Phone:   "+77073077797",
+		Email:   "nurlan.kambar@bcc.kz",
 	},
 }
 
 var events = []models.Event{
 	models.Event{
-		Title:       "Pohod v goory",
-		Description: "Pohod v goory",
+		Title:       "Поход в горы",
+		Description: "Пик Фурманова, средняя сложность",
+		Location:    "Медеу",
+		Category:    "Спорт",
+		Time:        1674935208,
 	},
 	models.Event{
-		Title:       "Pohod v goory",
-		Description: "Pohod v goory",
+		Title:       "Бег 5 км",
+		Location:    "Стадион Динамо",
+		Category:    "Спорт",
+		Description: "Предлагаю вместе побегать для подготовки к марафону",
+		Time:        1674935419,
 	},
 }
 

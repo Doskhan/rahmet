@@ -5,12 +5,12 @@ import (
 )
 
 type User struct {
-	ID       uint32 `gorm:"primary_key;auto_increment" json:"id"`
-	Bonus    uint32 `gorm:"default:0" json:"bonus"`
-	Name     string `gorm:"size:255;" json:"name"`
-	Surname  string `gorm:"size:100;" json:"surname"`
-	Password string `gorm:"size:100;;" json:"password"`
-	Email    string `gorm:"size:100;not null;" json:"email"`
+	ID      uint32 `gorm:"primary_key;auto_increment" json:"id"`
+	Bonus   uint32 `gorm:"default:0" json:"bonus"`
+	Name    string `gorm:"size:255;" json:"name"`
+	Surname string `gorm:"size:100;" json:"surname"`
+	Phone   string `gorm:"size:100;" json:"phone"`
+	Email   string `gorm:"size:100;not null;" json:"email"`
 }
 
 func (u *User) FindAllUsers(db *gorm.DB) (*[]User, error) {
