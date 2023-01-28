@@ -17,7 +17,6 @@ func main() {
 	// Initialize Database
 	database.Connect(AppConfig.ConnectionString)
 	database.Migrate()
-	//database.Load(DB)
 
 	// Initialize the router
 	router := mux.NewRouter().StrictSlash(true)
@@ -44,9 +43,8 @@ func RegisterRoutes(router *mux.Router) {
 	router.HandleFunc("/api/event", controllers.CreateEvent).Methods("POST")
 	router.HandleFunc("/api/event/participate", controllers.ParticipateEvent).Methods("POST")
 	router.HandleFunc("/api/event/rahmet", controllers.RahmetEvent).Methods("POST")
-	//router.HandleFunc("/api/products", controllers.CreateProduct).Methods("POST")
-	//router.HandleFunc("/api/products/{id}", controllers.UpdateProduct).Methods("PUT")
-	//router.HandleFunc("/api/products/{id}", controllers.DeleteProduct).Methods("DELETE")
+
+	// health
 	router.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)

@@ -55,16 +55,11 @@ var events = []models.Event{
 }
 
 func Migrate() {
-	//Instance.AutoMigrate(&models.User{})
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
 
 	Instance.Migrator().DropTable("users")
 	Instance.Migrator().DropTable("events")
-	//err := Instance.Migrator().DropTable(&models.Event{}, &models.User{}).Error
-	//if err != nil {
-	//	log.Fatalf("cannot drop table: %v", err)
-	//}
 
 	err := Instance.WithContext(ctx).Debug().AutoMigrate(&models.User{})
 	if err != nil {
