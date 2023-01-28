@@ -2,12 +2,11 @@ package main
 
 import (
 	"fmt"
+	"github.com/gorilla/mux"
 	"log"
 	"net/http"
 	"rahmet/controllers"
 	"rahmet/database"
-
-	"github.com/gorilla/mux"
 )
 
 func main() {
@@ -41,4 +40,8 @@ func RegisterRoutes(router *mux.Router) {
 	//router.HandleFunc("/api/products", controllers.CreateProduct).Methods("POST")
 	//router.HandleFunc("/api/products/{id}", controllers.UpdateProduct).Methods("PUT")
 	//router.HandleFunc("/api/products/{id}", controllers.DeleteProduct).Methods("DELETE")
+	router.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+	}).Methods("GET")
 }

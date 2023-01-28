@@ -10,6 +10,7 @@ type Event struct {
 	ID          uint64 `gorm:"primary_key;auto_increment" json:"id"`
 	Title       string `gorm:"size:255;" json:"title"`
 	Description string `gorm:"size:255;" json:"description"`
+	Category    string `gorm:"size:255;" json:"category"`
 	//Creator     User      `gorm:"foreignKey:CreatorID;references:ID" json:"creator"`
 	CreatorID    uint32        `json:"creator_id"`
 	Location     Location      `gorm:"embedded" json:"location"`
