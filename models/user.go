@@ -24,6 +24,6 @@ func (u *User) FindAllUsers(db *gorm.DB) (*[]User, error) {
 }
 
 type Participate struct {
-	UserID  int32 `json:"user_id"`
-	EventID int32 `json:"event_id"`
+	UserID  int `json:"user_id"`
+	EventID int `json:"event_id"`
 }

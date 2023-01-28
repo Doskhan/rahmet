@@ -10,7 +10,7 @@ import (
 
 func GetAllUsers(w http.ResponseWriter, r *http.Request) {
 	var users []models.User
-	database.Instance.Find(&users)
+	database.Instance.Order("bonus desc").Find(&users)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(users)

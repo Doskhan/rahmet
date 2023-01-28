@@ -50,7 +50,7 @@ func ParticipateEvent(w http.ResponseWriter, r *http.Request) {
 
 	var participate models.Participate
 	json.NewDecoder(r.Body).Decode(&participate)
-	eventId := strconv.Itoa(int(participate.EventID))
+	eventId := strconv.Itoa(participate.EventID)
 	if checkIfEventExists(eventId) == false {
 		w.WriteHeader(http.StatusBadGateway)
 		json.NewEncoder(w).Encode("Product Not Found!")
@@ -65,7 +65,17 @@ func ParticipateEvent(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	event.Participants = append(event.Participants, participate.UserID)
+	var user models.User
+	userId := participate.UserID
+
+	if checkIfUserExists(strconv.Itoa(userId)) == false {
+		json.NewEncoder(w).Encode("User Not Found!")
+		return
+	}
+
+	database.Instance.First(&user, userId)
+
+	event.Participants = append(event.Participants, user)
 	json.NewDecoder(r.Body).Decode(&event)
 
 	database.Instance.Save(&event)
