@@ -1,0 +1,4 @@
+{
+  "port": 8080,
+  "connection_string": "postgres://admin:bMmSwhKWbKvwsxY3PGSQKAlkSAhDMlky@dpg-cfacglkgqg4aqepp6o10-a.oregon-postgres.render.com/rahmetdb"
+}
