@@ -76,6 +76,7 @@ func ParticipateEvent(w http.ResponseWriter, r *http.Request) {
 	database.Instance.First(&user, userId)
 
 	event.Participants = append(event.Participants, user)
+	//event.RahmetParticipants = append(event.RahmetParticipants, int32(user.ID))
 	json.NewDecoder(r.Body).Decode(&event)
 
 	database.Instance.Save(&event)
@@ -98,12 +99,37 @@ func RahmetEvent(w http.ResponseWriter, r *http.Request) {
 
 	event.Bonus += 5
 
-	if event.Bonus == len(event.Participants)*5 {
+	if len(event.RahmetParticipants) > 0 {
+		for i, _ := range event.RahmetParticipants {
+			if event.RahmetParticipants[i] == int32(participate.UserID) {
+				w.WriteHeader(http.StatusBadGateway)
+				json.NewEncoder(w).Encode("Cannot rahmet more than once!")
+				return
+			}
+		}
+	}
+	event.RahmetParticipants = append(event.RahmetParticipants, int32(participate.UserID))
+
+	if len(event.Participants)-len(event.RahmetParticipants) == 0 {
 		event.Status = "inactive"
 	}
+
 	json.NewDecoder(r.Body).Decode(&event)
 
+	var creator models.User
+	userId := event.CreatorID
+
+	if checkIfUserExists(strconv.Itoa(int(userId))) == false {
+		json.NewEncoder(w).Encode("User Not Found!")
+		return
+	}
+
+	database.Instance.First(&creator, userId)
+
+	creator.Bonus += 5
+
 	database.Instance.Save(&event)
+	database.Instance.Save(&creator)
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(event)
 }

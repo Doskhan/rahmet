@@ -3,6 +3,7 @@ package models
 import (
 	"database/sql/driver"
 	"encoding/json"
+	"github.com/lib/pq"
 	"gorm.io/gorm"
 )
 
@@ -12,13 +13,14 @@ type Event struct {
 	Description string `gorm:"size:255;" json:"description"`
 	Category    string `gorm:"size:255;" json:"category"`
 	//Creator      User          `gorm:"foreignKey:CreatorID;references:ID" json:"creator"`
-	CreatorID    uint32    `json:"creator_id"`
-	Location     string    `gorm:"size:255" json:"location"`
-	Time         int       `json:"time"`
-	Limit        int       `gorm:"default:10" json:"limit"`
-	Bonus        int       `gorm:"default:0" json:"bonus"`
-	Participants UserArray `gorm:"column:participants;embedded" json:"participants"`
-	Status       string    `gorm:"size:255;default:'active'" json:"status"`
+	CreatorID          uint32        `json:"creator_id"`
+	Location           string        `gorm:"size:255" json:"location"`
+	Time               int           `json:"time"`
+	Limit              int           `gorm:"default:10" json:"limit"`
+	Bonus              int           `gorm:"default:0" json:"bonus"`
+	Participants       UserArray     `gorm:"column:participants;embedded" json:"participants"`
+	RahmetParticipants pq.Int32Array `gorm:"type:integer[]" json:"rahmet_participants"`
+	Status             string        `gorm:"size:255;default:'active'" json:"status"`
 }
 
 type UserArray []User
