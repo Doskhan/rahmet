@@ -59,10 +59,6 @@ func ParticipateEvent(w http.ResponseWriter, r *http.Request) {
 	var event models.Event
 	database.Instance.First(&event, eventId)
 
-	if event.Limit == len(event.Participants) {
-		event.Status = "in progress"
-	}
-
 	var user models.User
 	userId := participate.UserID
 
@@ -74,6 +70,9 @@ func ParticipateEvent(w http.ResponseWriter, r *http.Request) {
 	database.Instance.First(&user, userId)
 
 	event.Participants = append(event.Participants, user)
+	if event.Limit == len(event.Participants) {
+		event.Status = "in progress"
+	}
 	//event.RahmetParticipants = append(event.RahmetParticipants, int32(user.ID))
 	json.NewDecoder(r.Body).Decode(&event)
 
