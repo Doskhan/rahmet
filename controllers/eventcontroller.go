@@ -11,7 +11,7 @@ import (
 
 func GetAllEvents(w http.ResponseWriter, r *http.Request) {
 	var events []models.Event
-	database.Instance.Find(&events, "status = ?", "active")
+	database.Instance.Find(&events)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(events)
@@ -60,7 +60,7 @@ func ParticipateEvent(w http.ResponseWriter, r *http.Request) {
 	database.Instance.First(&event, eventId)
 
 	if event.Limit == len(event.Participants) {
-		event.Status = "in progess"
+		event.Status = "in progress"
 	}
 
 	var user models.User
