@@ -59,10 +59,8 @@ func ParticipateEvent(w http.ResponseWriter, r *http.Request) {
 	var event models.Event
 	database.Instance.First(&event, eventId)
 
-	if event.Limit < len(event.Participants)+1 {
-		w.WriteHeader(http.StatusBadGateway)
-		json.NewEncoder(w).Encode("Limit exceeded")
-		return
+	if event.Limit == len(event.Participants) {
+		event.Status = "in progess"
 	}
 
 	var user models.User
@@ -130,6 +128,44 @@ func RahmetEvent(w http.ResponseWriter, r *http.Request) {
 
 	database.Instance.Save(&event)
 	database.Instance.Save(&creator)
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(event)
+}
+
+func EndEventByCreator(w http.ResponseWriter, r *http.Request) {
+
+	var participate models.Participate
+	json.NewDecoder(r.Body).Decode(&participate)
+	eventId := strconv.Itoa(int(participate.EventID))
+	if checkIfEventExists(eventId) == false {
+		w.WriteHeader(http.StatusBadGateway)
+		json.NewEncoder(w).Encode("Product Not Found!")
+		return
+	}
+	var event models.Event
+	database.Instance.First(&event, eventId)
+	event.Status = "finished"
+
+	database.Instance.Save(&event)
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(event)
+}
+
+func StartEventByCreator(w http.ResponseWriter, r *http.Request) {
+
+	var participate models.Participate
+	json.NewDecoder(r.Body).Decode(&participate)
+	eventId := strconv.Itoa(int(participate.EventID))
+	if checkIfEventExists(eventId) == false {
+		w.WriteHeader(http.StatusBadGateway)
+		json.NewEncoder(w).Encode("Product Not Found!")
+		return
+	}
+	var event models.Event
+	database.Instance.First(&event, eventId)
+	event.Status = "in progress"
+
+	database.Instance.Save(&event)
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(event)
 }

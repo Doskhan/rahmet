@@ -43,6 +43,8 @@ func RegisterRoutes(router *mux.Router) {
 	router.HandleFunc("/api/event", controllers.CreateEvent).Methods("POST")
 	router.HandleFunc("/api/event/participate", controllers.ParticipateEvent).Methods("POST")
 	router.HandleFunc("/api/event/rahmet", controllers.RahmetEvent).Methods("POST")
+	router.HandleFunc("/api/event/end", controllers.EndEventByCreator).Methods("POST")
+	router.HandleFunc("/api/event/start", controllers.StartEventByCreator).Methods("POST")
 
 	// health
 	router.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {

@@ -6,7 +6,7 @@ import (
 
 type User struct {
 	ID      uint32 `gorm:"primary_key;auto_increment" json:"id"`
-	Bonus   uint32 `gorm:"default:0" json:"bonus"`
+	Bonus   uint32 `gorm:"default:5" json:"bonus"`
 	Name    string `gorm:"size:255;" json:"name"`
 	Surname string `gorm:"size:100;" json:"surname"`
 	Phone   string `gorm:"size:100;" json:"phone"`
