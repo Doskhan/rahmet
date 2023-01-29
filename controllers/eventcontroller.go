@@ -68,6 +68,7 @@ func ParticipateEvent(w http.ResponseWriter, r *http.Request) {
 	}
 
 	database.Instance.First(&user, userId)
+	user.Bonus += 2 // participation bonus
 
 	event.Participants = append(event.Participants, user)
 	if event.Limit == len(event.Participants) {
@@ -77,6 +78,7 @@ func ParticipateEvent(w http.ResponseWriter, r *http.Request) {
 	json.NewDecoder(r.Body).Decode(&event)
 
 	database.Instance.Save(&event)
+	database.Instance.Save(&user)
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(event)
 }
